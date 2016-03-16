@@ -1,5 +1,5 @@
-import { ByteArray, Component, ComponentBuilder, EndPoint, Message, Direction } from 'cryptographix-sim-core';
-import { inject } from 'cryptographix-sim-core';
+import { Kind, KindBuilder, ByteArray, Component, ComponentBuilder, EndPoint, Message, Direction } from 'cryptographix-sim-core';
+//import { inject } from 'cryptographix-sim-core';
 import { CommandAPDU, ResponseAPDU, JSIMSlot, JSIMScriptCard, SlotProtocolHandler } from 'cryptographix-se-core';
 import { JSIMEMVApplet } from './card/jsim-emv-applet';
 
@@ -72,6 +72,25 @@ export class EMVCardSimulator implements Component
   }
 }
 
+export class CardConfig implements Kind {
+  onlineOnly: boolean;
+  offlineDataAuth: OfflineDataAuthentication;
+  profile: string;
+}
+
+export enum OfflineDataAuthentication {
+  NOODA,
+  SDA,
+  DDA,
+  CDA
+}
+
+KindBuilder.init( CardConfig, 'EMV Card Simulator Configuration')
+  .boolField( 'onlineOnly', 'Online Line')
+  .enumField( 'offlineDataAuth', 'Offline Authentication', OfflineDataAuthentication )
+  .stringField( 'profile', 'Card Profile' );
+
 ComponentBuilder
   .init( EMVCardSimulator, 'EMV Card Simulator', 'A pure-js simulator for EMV Payment Cards', 'emv-payments' )
+  .config( CardConfig, { onlineOnly: true, offlineDataAuth: OfflineDataAuthentication.NOODA, profile: 'default' } )
   .port( 'iso7816', 'Smartcard Commands', Direction.IN, { protocol: SlotProtocolHandler, required: true } );
