@@ -1,0 +1,34 @@
+{
+  "name": "emv",
+  "version": "0.0.1",
+  "description": "Security Building Blocks for payments EMV",
+  "keywords": [
+    "EMV",
+    "security",
+    "blocks"
+  ],
+  "homepage": "http://cryptographix.org",
+  "license": "MIT",
+  "author": "Sean Wykes <sean.public@nascent.com.br> (http://nascent.com.br/)",
+  "main": "dist/cjs/index.js",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/cryptographix/emv-components"
+  },
+  "jspm": {
+    "main": "index",
+    "format": "system",
+    "directories": {
+      "lib": "dist/system"
+    },
+    "dependencies": {
+      "cryptographix-se-core": "npm:cryptographix-se-core@^0.2.0-devel",
+      "cryptographix-sim-core": "npm:cryptographix-sim-core@^0.2.0-devel"
+    },
+    "devDependencies": {}
+  },
+  "devDependencies": {
+    "cgfx-build-tools": "^0.3.2",
+    "gulp": "^3.9.0"
+  }
+}
